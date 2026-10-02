@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adventure – Aktiviteter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Aktiviteter</h1>
+
+<section>
+    <h2 id="formTitel">Opret aktivitet</h2>
+    <form id="aktivitetForm">
+        <label>Navn
+            <input id="navn" required>
+        </label>
+        <label>Pris (kr.)
+            <input id="pris" type="number" min="0" required>
+        </label>
+        <label>Beskrivelse
+            <textarea id="beskrivelse" rows="3"></textarea>
+        </label>
+        <label>Aldersgrænse
+            <input id="aldersgraense" type="number" min="0" required>
+        </label>
+        <label>Varighed (minutter)
+            <input id="varighed" type="number" min="1" required>
+        </label>
+        <label>Kapacitet
+            <input id="kapacitet" type="number" min="1" required>
+        </label>
+
+        <p id="fejlbesked" class="fejl"></p>
+
+        <button type="submit" id="gemKnap">Opret</button>
+        <button type="button" id="annullerKnap" hidden>Annuller</button>
+    </form>
+</section>
+
+<section>
+    <h2>Alle aktiviteter</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Beskrivelse</th>
+            <th>Pris</th>
+            <th>Alder</th>
+            <th>Varighed</th>
+            <th>Kapacitet</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="aktivitetTabel"></tbody>
+    </table>
+</section>
+
+<script src="activities.js"></script>
+</body>
+</html>
