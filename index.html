@@ -3,59 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Adventure – Aktiviteter</title>
+    <title>Adventure</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Aktiviteter</h1>
+<header class="topbar">
+    <div class="topbar-indhold">
+        <a href="index.html" class="logo">Adventure</a>
+        <nav aria-label="Hovedmenu">
+            <a href="aktiviteter.html">Aktiviteter</a>
+            <a href="booking.html">Book</a>
+            <a href="firma.html">Firma</a>
+            <a href="manager-bookinger.html">Manager</a>
+            <a href="medarbejder.html">Medarbejder</a>
+            <a href="admin-aktiviteter.html">Ejer</a>
+        </nav>
+    </div>
+</header>
 
-<section>
-    <h2 id="formTitel">Opret aktivitet</h2>
-    <form id="aktivitetForm">
-        <label>Navn
-            <input id="navn" required>
-        </label>
-        <label>Pris (kr.)
-            <input id="pris" type="number" min="0" required>
-        </label>
-        <label>Beskrivelse
-            <textarea id="beskrivelse" rows="3"></textarea>
-        </label>
-        <label>Aldersgrænse
-            <input id="aldersgraense" type="number" min="0" required>
-        </label>
-        <label>Varighed (minutter)
-            <input id="varighed" type="number" min="1" required>
-        </label>
-        <label>Kapacitet
-            <input id="kapacitet" type="number" min="1" required>
-        </label>
+<main>
+    <div class="sidehoved">
+        <h1>Velkommen til Adventure</h1>
+        <p class="undertekst">Go-kart, paintball, minigolf og meget mere. Vælg, hvad du vil gøre.</p>
+    </div>
 
-        <p id="fejlbesked" class="fejl"></p>
+    <h2>For gæster</h2>
+    <div class="kort-gitter" style="margin-bottom: 32px">
+        <section class="kort rolle-kort">
+            <div class="ikon" aria-hidden="true">🎟️</div>
+            <h2>Book en aktivitet</h2>
+            <p class="undertekst">Se vores aktiviteter, find en ledig tid og book på få minutter.</p>
+            <div class="knap-raekke">
+                <a class="knap" href="booking.html">Book nu</a>
+                <a class="knap sekundaer" href="aktiviteter.html">Se aktiviteter</a>
+            </div>
+        </section>
 
-        <button type="submit" id="gemKnap">Opret</button>
-        <button type="button" id="annullerKnap" hidden>Annuller</button>
-    </form>
-</section>
+        <section class="kort rolle-kort">
+            <div class="ikon" aria-hidden="true">🏢</div>
+            <h2>Firmaarrangement</h2>
+            <p class="undertekst">Send en forespørgsel, så sammensætter vi et program til jeres firma.</p>
+            <div class="knap-raekke">
+                <a class="knap" href="firma.html">Send forespørgsel</a>
+            </div>
+        </section>
+    </div>
 
-<section>
-    <h2>Alle aktiviteter</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Navn</th>
-            <th>Beskrivelse</th>
-            <th>Pris</th>
-            <th>Alder</th>
-            <th>Varighed</th>
-            <th>Kapacitet</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody id="aktivitetTabel"></tbody>
-    </table>
-</section>
+    <h2>For medarbejdere</h2>
+    <div class="kort-gitter">
+        <section class="kort rolle-kort">
+            <h2>Manager</h2>
+            <p class="undertekst">Bookinger, dagsoversigt, telefonbookinger og firmaforespørgsler.</p>
+            <div class="knap-raekke">
+                <a class="knap" href="manager-bookinger.html">Åbn</a>
+            </div>
+        </section>
 
-<script src="activities.js"></script>
+        <section class="kort rolle-kort">
+            <h2>Aktivitetsmedarbejder</h2>
+            <p class="undertekst">Se dagens bookinger for din aktivitet.</p>
+            <div class="knap-raekke">
+                <a class="knap" href="medarbejder.html">Åbn</a>
+            </div>
+        </section>
+
+        <section class="kort rolle-kort">
+            <h2>Ejer</h2>
+            <p class="undertekst">Opret og ret aktiviteter, priser og åbningstider.</p>
+            <div class="knap-raekke">
+                <a class="knap" href="admin-aktiviteter.html">Åbn</a>
+            </div>
+        </section>
+    </div>
+</main>
 </body>
 </html>
