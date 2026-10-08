@@ -1,0 +1,5 @@
+.git
+.idea
+Dockerfile
+.dockerignore
+README.md
