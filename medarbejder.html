@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dagens bookinger – Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-indhold">
+        <a href="index.html" class="logo">Adventure</a>
+        <nav aria-label="Hovedmenu">
+            <a href="aktiviteter.html">Aktiviteter</a>
+            <a href="booking.html">Book</a>
+            <a href="firma.html">Firma</a>
+            <a href="manager-bookinger.html">Manager</a>
+            <a href="medarbejder.html" aria-current="page">Medarbejder</a>
+            <a href="admin-aktiviteter.html">Ejer</a>
+        </nav>
+    </div>
+</header>
+<div id="serverFejl" class="banner fejl" role="alert" hidden></div>
+
+<main>
+    <div class="sidehoved">
+        <p class="rolle">Aktivitetsmedarbejder</p>
+        <h1>Dagens bookinger</h1>
+        <p class="undertekst">Vælg din aktivitet for at se, hvem der kommer og hvornår.</p>
+    </div>
+
+    <section class="kort">
+        <div class="vaerktoejslinje">
+            <label>Aktivitet
+                <select id="aktivitet"></select>
+            </label>
+            <div class="dato-skifter">
+                <button type="button" class="sekundaer" id="forrigeDag" aria-label="Forrige dag">←</button>
+                <label>Dato
+                    <input id="dato" type="date">
+                </label>
+                <button type="button" class="sekundaer" id="naesteDag" aria-label="Næste dag">→</button>
+                <button type="button" class="sekundaer" id="iDagKnap">I dag</button>
+            </div>
+        </div>
+
+        <div class="noegletal">
+            <div><strong id="antalBookinger">0</strong><span>bookinger</span></div>
+            <div><strong id="antalPersoner">0</strong><span>personer i alt</span></div>
+            <div><strong id="kapacitet">–</strong><span>pladser pr. omgang</span></div>
+        </div>
+
+        <div class="tabel-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Tid</th>
+                    <th>Kunde</th>
+                    <th>Telefon</th>
+                    <th class="tal">Personer</th>
+                    <th class="tal">Yngste</th>
+                </tr>
+                </thead>
+                <tbody id="bookingTabel"></tbody>
+            </table>
+        </div>
+        <p id="ingenBookinger" class="tom-tilstand" hidden>Ingen bookinger for denne aktivitet på denne dato.</p>
+    </section>
+</main>
+
+<script src="config.js"></script>
+<script src="medarbejder.js"></script>
+</body>
+</html>

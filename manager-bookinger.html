@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookinger – Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-indhold">
+        <a href="index.html" class="logo">Adventure</a>
+        <nav aria-label="Hovedmenu">
+            <a href="aktiviteter.html">Aktiviteter</a>
+            <a href="booking.html">Book</a>
+            <a href="firma.html">Firma</a>
+            <a href="manager-bookinger.html" aria-current="page">Manager</a>
+            <a href="medarbejder.html">Medarbejder</a>
+            <a href="admin-aktiviteter.html">Ejer</a>
+        </nav>
+    </div>
+</header>
+<div id="serverFejl" class="banner fejl" role="alert" hidden></div>
+
+<main>
+    <div class="sidehoved">
+        <p class="rolle">Manager</p>
+        <h1>Bookinger</h1>
+        <p class="undertekst">Dagsoversigt over alle bookinger. Ret eller slet en booking, eller opret en ny fra telefonen.</p>
+    </div>
+
+    <nav class="faner" aria-label="Managerens sider">
+        <a href="manager-bookinger.html" aria-current="page">Bookinger</a>
+        <a href="manager-forespoergsler.html">Firmaforespørgsler</a>
+        <a href="booking.html">+ Telefonbooking</a>
+    </nav>
+
+    <section class="kort">
+        <div class="vaerktoejslinje">
+            <div class="dato-skifter">
+                <button type="button" class="sekundaer" id="forrigeDag" aria-label="Forrige dag">←</button>
+                <label>Dato
+                    <input id="dato" type="date">
+                </label>
+                <button type="button" class="sekundaer" id="naesteDag" aria-label="Næste dag">→</button>
+                <button type="button" class="sekundaer" id="iDagKnap">I dag</button>
+            </div>
+        </div>
+
+        <div class="noegletal">
+            <div><strong id="antalBookinger">0</strong><span>bookinger</span></div>
+            <div><strong id="antalPersoner">0</strong><span>personer i alt</span></div>
+        </div>
+
+        <p id="listeBesked" class="banner ok" role="status"></p>
+
+        <div class="tabel-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Tid</th>
+                    <th>Aktivitet</th>
+                    <th>Kunde</th>
+                    <th class="tal">Personer</th>
+                    <th class="tal">Yngste</th>
+                    <th><span class="skjult">Handlinger</span></th>
+                </tr>
+                </thead>
+                <tbody id="bookingTabel"></tbody>
+            </table>
+        </div>
+        <p id="ingenBookinger" class="tom-tilstand" hidden>Ingen bookinger på denne dato.</p>
+    </section>
+
+    <section id="redigerSektion" class="kort" hidden>
+        <h2 id="redigerTitel">Ret booking</h2>
+        <form id="redigerForm">
+            <div class="felter">
+                <label>Dato
+                    <input id="redigerDato" type="date" required>
+                </label>
+                <label>Tid
+                    <select id="redigerTid" required></select>
+                </label>
+                <label>Antal personer
+                    <input id="redigerAntal" type="number" min="1" required>
+                </label>
+                <label>Alder på yngste deltager
+                    <input id="redigerMinAlder" type="number" min="0" required>
+                </label>
+            </div>
+
+            <p id="redigerBesked" class="banner fejl" role="alert"></p>
+
+            <div class="knap-raekke">
+                <button type="submit">Gem ændringer</button>
+                <button type="button" id="annullerKnap" class="sekundaer">Annuller</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<script src="config.js"></script>
+<script src="manager-bookinger.js"></script>
+</body>
+</html>

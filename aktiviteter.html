@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aktiviteter – Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-indhold">
+        <a href="index.html" class="logo">Adventure</a>
+        <nav aria-label="Hovedmenu">
+            <a href="aktiviteter.html" aria-current="page">Aktiviteter</a>
+            <a href="booking.html">Book</a>
+            <a href="firma.html">Firma</a>
+            <a href="manager-bookinger.html">Manager</a>
+            <a href="medarbejder.html">Medarbejder</a>
+            <a href="admin-aktiviteter.html">Ejer</a>
+        </nav>
+    </div>
+</header>
+<div id="serverFejl" class="banner fejl" role="alert" hidden></div>
+
+<main>
+    <div class="sidehoved">
+        <h1>Vores aktiviteter</h1>
+        <p class="undertekst">Find den aktivitet, der passer til jer, og tryk på “Book”.</p>
+    </div>
+
+    <div id="aktivitetListe" class="kort-gitter"></div>
+</main>
+
+<script src="config.js"></script>
+<script src="aktiviteter.js"></script>
+</body>
+</html>

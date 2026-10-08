@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administrer aktiviteter – Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-indhold">
+        <a href="index.html" class="logo">Adventure</a>
+        <nav aria-label="Hovedmenu">
+            <a href="aktiviteter.html">Aktiviteter</a>
+            <a href="booking.html">Book</a>
+            <a href="firma.html">Firma</a>
+            <a href="manager-bookinger.html">Manager</a>
+            <a href="medarbejder.html">Medarbejder</a>
+            <a href="admin-aktiviteter.html" aria-current="page">Ejer</a>
+        </nav>
+    </div>
+</header>
+<div id="serverFejl" class="banner fejl" role="alert" hidden></div>
+
+<main>
+    <div class="sidehoved">
+        <p class="rolle">Ejer</p>
+        <h1>Administrer aktiviteter</h1>
+        <p class="undertekst">Opret nye aktiviteter, og ret priser, pladser og åbningstider.</p>
+    </div>
+
+    <section class="kort">
+        <div class="vaerktoejslinje">
+            <h2 style="margin: 0">Alle aktiviteter</h2>
+            <button type="button" id="nyKnap" class="skub-hoejre">+ Ny aktivitet</button>
+        </div>
+
+        <p id="listeBesked" class="banner ok" role="status"></p>
+
+        <div class="tabel-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Aktivitet</th>
+                    <th class="tal">Pris</th>
+                    <th class="tal">Alder</th>
+                    <th class="tal">Varighed</th>
+                    <th class="tal">Pladser</th>
+                    <th>Åbent</th>
+                    <th><span class="skjult">Handlinger</span></th>
+                </tr>
+                </thead>
+                <tbody id="aktivitetTabel"></tbody>
+            </table>
+        </div>
+        <p id="ingenAktiviteter" class="tom-tilstand" hidden>Der er ingen aktiviteter endnu. Tryk på “+ Ny aktivitet”.</p>
+    </section>
+
+    <section id="formSektion" class="kort" hidden>
+        <h2 id="formTitel">Ny aktivitet</h2>
+        <form id="aktivitetForm">
+            <fieldset>
+                <legend>Beskrivelse</legend>
+                <div class="felter">
+                    <label class="hel-bredde">Navn
+                        <input id="navn" required>
+                    </label>
+                    <label class="hel-bredde">Beskrivelse
+                        <textarea id="beskrivelse" rows="2"></textarea>
+                    </label>
+                    <label>Pris pr. person (kr.)
+                        <input id="pris" type="number" min="0" required>
+                    </label>
+                    <label>Aldersgrænse (år)
+                        <input id="aldersgraense" type="number" min="0" required>
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Tider og pladser</legend>
+                <div class="felter">
+                    <label>Åbner
+                        <input id="aabner" type="time" value="10:00" required>
+                    </label>
+                    <label>Lukker
+                        <input id="lukker" type="time" value="18:00" required>
+                    </label>
+                    <label>Varighed (minutter)
+                        <input id="varighed" type="number" min="1" required>
+                        <span class="hjaelp">Bestemmer også starttiderne: fx 30 min giver 10:00, 10:30, 11:00 …</span>
+                    </label>
+                    <label>Pladser pr. omgang
+                        <input id="kapacitet" type="number" min="1" required>
+                    </label>
+                </div>
+            </fieldset>
+
+            <p id="fejlbesked" class="banner fejl" role="alert"></p>
+
+            <div class="knap-raekke">
+                <button type="submit" id="gemKnap">Opret aktivitet</button>
+                <button type="button" id="annullerKnap" class="sekundaer">Annuller</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<script src="config.js"></script>
+<script src="activities.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Firmaforespørgsler – Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-indhold">
+        <a href="index.html" class="logo">Adventure</a>
+        <nav aria-label="Hovedmenu">
+            <a href="aktiviteter.html">Aktiviteter</a>
+            <a href="booking.html">Book</a>
+            <a href="firma.html">Firma</a>
+            <a href="manager-bookinger.html" aria-current="page">Manager</a>
+            <a href="medarbejder.html">Medarbejder</a>
+            <a href="admin-aktiviteter.html">Ejer</a>
+        </nav>
+    </div>
+</header>
+<div id="serverFejl" class="banner fejl" role="alert" hidden></div>
+
+<main>
+    <div class="sidehoved">
+        <p class="rolle">Manager</p>
+        <h1>Firmaforespørgsler</h1>
+        <p class="undertekst">Åbn en forespørgsel, vælg tider for aktiviteterne, og godkend eller afvis den.</p>
+    </div>
+
+    <nav class="faner" aria-label="Managerens sider">
+        <a href="manager-bookinger.html">Bookinger</a>
+        <a href="manager-forespoergsler.html" aria-current="page">Firmaforespørgsler</a>
+        <a href="booking.html">+ Telefonbooking</a>
+    </nav>
+
+    <section class="kort">
+        <div class="vaerktoejslinje">
+            <label>Vis
+                <select id="statusFilter">
+                    <option value="AFVENTER">Afventer behandling</option>
+                    <option value="GODKENDT">Godkendte</option>
+                    <option value="AFVIST">Afviste</option>
+                    <option value="">Alle</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="tabel-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Nr.</th>
+                    <th>Firma</th>
+                    <th>Dato</th>
+                    <th class="tal">Deltagere</th>
+                    <th>Status</th>
+                    <th><span class="skjult">Handlinger</span></th>
+                </tr>
+                </thead>
+                <tbody id="forespoergselTabel"></tbody>
+            </table>
+        </div>
+        <p id="ingenForespoergsler" class="tom-tilstand" hidden>Ingen forespørgsler her.</p>
+    </section>
+
+    <section id="detaljeSektion" class="kort" hidden>
+        <h2 id="detaljeTitel"></h2>
+        <dl id="detaljer" class="detaljer"></dl>
+
+        <form id="godkendForm">
+            <fieldset>
+                <legend>Tidspunkter</legend>
+                <p class="hjaelp" style="margin-top: 0">Vælg en starttid for hver aktivitet. Tider uden plads til hele gruppen kan ikke vælges, og aktiviteterne må ikke overlappe.</p>
+                <div id="tidsvalg" class="felter"></div>
+            </fieldset>
+
+            <p id="detaljeBesked" class="banner fejl" role="alert"></p>
+
+            <div class="knap-raekke" id="behandlKnapper">
+                <button type="submit" id="godkendKnap">Godkend og opret bookinger</button>
+                <button type="button" id="afvisKnap" class="fare">Afvis</button>
+                <button type="button" id="lukKnap" class="sekundaer">Luk</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<script src="config.js"></script>
+<script src="manager-forespoergsler.js"></script>
+</body>
+</html>

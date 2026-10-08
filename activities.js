@@ -1,13 +1,16 @@
-const API_URL = "http://localhost:8080/api/activities";
+// US12: ejeren opretter, retter og sletter aktiviteter
+const API_URL = API_BASE + "/activities";
 
 const form = document.getElementById("aktivitetForm");
+const formSektion = document.getElementById("formSektion");
 const formTitel = document.getElementById("formTitel");
 const gemKnap = document.getElementById("gemKnap");
-const annullerKnap = document.getElementById("annullerKnap");
 const fejlbesked = document.getElementById("fejlbesked");
+const listeBesked = document.getElementById("listeBesked");
 const tabel = document.getElementById("aktivitetTabel");
+const ingenAktiviteter = document.getElementById("ingenAktiviteter");
 
-// null = vi opretter en ny aktivitet, ellers id'et på den vi redigerer
+// null = vi opretter en ny aktivitet, ellers id'et på den vi retter
 let redigererId = null;
 
 async function hentAktiviteter() {
@@ -15,6 +18,7 @@ async function hentAktiviteter() {
     const aktiviteter = await response.json();
 
     tabel.innerHTML = "";
+    ingenAktiviteter.hidden = aktiviteter.length > 0;
     for (const aktivitet of aktiviteter) {
         tabel.appendChild(lavRaekke(aktivitet));
     }
@@ -22,35 +26,30 @@ async function hentAktiviteter() {
 
 function lavRaekke(aktivitet) {
     const raekke = document.createElement("tr");
+    if (aktivitet.id === redigererId) {
+        raekke.className = "valgt";
+    }
 
-    tilfoejCelle(raekke, aktivitet.navn);
-    tilfoejCelle(raekke, aktivitet.beskrivelse);
-    tilfoejCelle(raekke, aktivitet.pris + " kr.");
-    tilfoejCelle(raekke, aktivitet.aldersgrænse + "+");
-    tilfoejCelle(raekke, aktivitet.varighed + " min");
-    tilfoejCelle(raekke, aktivitet.kapacitet);
+    // Navn med beskrivelse nedenunder (nærhed)
+    const navnCelle = tilfoejCelle(raekke, aktivitet.navn);
+    const beskrivelse = document.createElement("span");
+    beskrivelse.className = "svag";
+    beskrivelse.textContent = aktivitet.beskrivelse;
+    navnCelle.appendChild(beskrivelse);
+
+    tilfoejCelle(raekke, aktivitet.pris + " kr.").className = "tal";
+    tilfoejCelle(raekke, aktivitet.aldersgrænse + "+").className = "tal";
+    tilfoejCelle(raekke, aktivitet.varighed + " min").className = "tal";
+    tilfoejCelle(raekke, aktivitet.kapacitet).className = "tal";
+    tilfoejCelle(raekke, formatTid(aktivitet.aabner) + "–" + formatTid(aktivitet.lukker));
 
     const knapCelle = document.createElement("td");
-
-    const redigerKnap = document.createElement("button");
-    redigerKnap.textContent = "Rediger";
-    redigerKnap.addEventListener("click", () => startRediger(aktivitet));
-
-    const sletKnap = document.createElement("button");
-    sletKnap.textContent = "Slet";
-    sletKnap.addEventListener("click", () => sletAktivitet(aktivitet.id));
-
-    knapCelle.appendChild(redigerKnap);
-    knapCelle.appendChild(sletKnap);
+    knapCelle.className = "handlinger";
+    knapCelle.appendChild(lavKnap("Ret", "sekundaer", () => startRediger(aktivitet)));
+    knapCelle.appendChild(lavKnap("Slet", "fare", () => sletAktivitet(aktivitet)));
     raekke.appendChild(knapCelle);
 
     return raekke;
-}
-
-function tilfoejCelle(raekke, tekst) {
-    const celle = document.createElement("td");
-    celle.textContent = tekst;
-    raekke.appendChild(celle);
 }
 
 function laesFormular() {
@@ -60,13 +59,15 @@ function laesFormular() {
         beskrivelse: document.getElementById("beskrivelse").value,
         aldersgrænse: Number(document.getElementById("aldersgraense").value),
         varighed: Number(document.getElementById("varighed").value),
-        kapacitet: Number(document.getElementById("kapacitet").value)
+        kapacitet: Number(document.getElementById("kapacitet").value),
+        aabner: document.getElementById("aabner").value,
+        lukker: document.getElementById("lukker").value
     };
 }
 
 async function gemAktivitet(event) {
     event.preventDefault();
-    fejlbesked.textContent = "";
+    skjulBesked(fejlbesked);
 
     const aktivitet = laesFormular();
 
@@ -77,19 +78,37 @@ async function gemAktivitet(event) {
         method = "PUT";
     }
 
+    gemKnap.disabled = true;
     const response = await fetch(url, {
         method: method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(aktivitet)
     });
+    gemKnap.disabled = false;
 
     if (!response.ok) {
-        fejlbesked.textContent = await response.text() || "Noget gik galt";
+        visBesked(fejlbesked, await response.text() || "Aktiviteten kunne ikke gemmes.", "fejl");
         return;
     }
 
-    nulstilFormular();
+    if (redigererId !== null) {
+        visBesked(listeBesked, aktivitet.navn + " er opdateret.", "ok");
+    } else {
+        visBesked(listeBesked, aktivitet.navn + " er oprettet.", "ok");
+    }
+    lukFormular();
+}
+
+function aabnNyAktivitet() {
+    redigererId = null;
+    form.reset();
+    formTitel.textContent = "Ny aktivitet";
+    gemKnap.textContent = "Opret aktivitet";
+    skjulBesked(fejlbesked);
+    skjulBesked(listeBesked);
+    formSektion.hidden = false;
     hentAktiviteter();
+    document.getElementById("navn").focus();
 }
 
 function startRediger(aktivitet) {
@@ -101,35 +120,44 @@ function startRediger(aktivitet) {
     document.getElementById("aldersgraense").value = aktivitet.aldersgrænse;
     document.getElementById("varighed").value = aktivitet.varighed;
     document.getElementById("kapacitet").value = aktivitet.kapacitet;
+    document.getElementById("aabner").value = formatTid(aktivitet.aabner);
+    document.getElementById("lukker").value = formatTid(aktivitet.lukker);
 
-    formTitel.textContent = "Rediger aktivitet";
+    formTitel.textContent = "Ret " + aktivitet.navn;
     gemKnap.textContent = "Gem ændringer";
-    annullerKnap.hidden = false;
-    fejlbesked.textContent = "";
+    skjulBesked(fejlbesked);
+    skjulBesked(listeBesked);
+    formSektion.hidden = false;
+    hentAktiviteter();
+    formSektion.scrollIntoView({ behavior: "smooth" });
 }
 
-function nulstilFormular() {
+function lukFormular() {
     redigererId = null;
     form.reset();
-    formTitel.textContent = "Opret aktivitet";
-    gemKnap.textContent = "Opret";
-    annullerKnap.hidden = true;
-    fejlbesked.textContent = "";
+    formSektion.hidden = true;
+    hentAktiviteter();
 }
 
-async function sletAktivitet(id) {
-    if (!confirm("Er du sikker på, at du vil slette aktiviteten?")) {
+async function sletAktivitet(aktivitet) {
+    if (!confirm("Slet " + aktivitet.navn + "?\nDet kan ikke fortrydes.")) {
         return;
     }
 
-    const response = await fetch(API_URL + "/" + id, { method: "DELETE" });
-    if (!response.ok) {
-        alert("Aktiviteten kunne ikke slettes");
+    const response = await fetch(API_URL + "/" + aktivitet.id, { method: "DELETE" });
+    if (response.ok) {
+        visBesked(listeBesked, aktivitet.navn + " er slettet.", "ok");
+    } else {
+        visBesked(listeBesked, await response.text() || "Aktiviteten kunne ikke slettes.", "fejl");
+    }
+    if (redigererId === aktivitet.id) {
+        lukFormular();
     }
     hentAktiviteter();
 }
 
 form.addEventListener("submit", gemAktivitet);
-annullerKnap.addEventListener("click", nulstilFormular);
+document.getElementById("nyKnap").addEventListener("click", aabnNyAktivitet);
+document.getElementById("annullerKnap").addEventListener("click", lukFormular);
 
 hentAktiviteter();
