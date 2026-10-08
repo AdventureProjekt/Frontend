@@ -2,111 +2,101 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Administrer aktiviteter – Adventure</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Manager - aktiviteter og udstyr</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="topbar">
-    <div class="topbar-indhold">
-        <a href="index.html" class="logo">Adventure</a>
-        <nav aria-label="Hovedmenu">
-            <a href="aktiviteter.html">Aktiviteter</a>
-            <a href="booking.html">Book</a>
-            <a href="firma.html">Firma</a>
-            <a href="manager-bookinger.html">Manager</a>
-            <a href="medarbejder.html">Medarbejder</a>
-            <a href="admin-aktiviteter.html" aria-current="page">Ejer</a>
-        </nav>
-    </div>
-</header>
-<div id="serverFejl" class="banner fejl" role="alert" hidden></div>
+<nav>
+    <a href="index.html">Forside</a>
+    <a href="manager-bookinger.html">Bookinger</a>
+    <a href="manager-forespoergsler.html">Firmaforespørgsler</a>
+    <a href="admin-aktiviteter.html">Aktiviteter og udstyr</a>
+    <a href="booking.html">Ny telefonbooking</a>
+</nav>
 
-<main>
-    <div class="sidehoved">
-        <p class="rolle">Ejer</p>
-        <h1>Administrer aktiviteter</h1>
-        <p class="undertekst">Opret nye aktiviteter, og ret priser, pladser og åbningstider.</p>
-    </div>
+<h1>Aktiviteter og udstyr</h1>
+<p id="txtBekraeftelse" class="bekraeftelse" hidden></p>
 
-    <section class="kort">
-        <div class="vaerktoejslinje">
-            <h2 style="margin: 0">Alle aktiviteter</h2>
-            <button type="button" id="nyKnap" class="skub-hoejre">+ Ny aktivitet</button>
+<div class="form-container">
+    <h2 id="txtFormTitel">Opret aktivitet</h2>
+    <form id="formAktivitet">
+        <div class="form-group">
+            <label for="inpNavn">Navn</label>
+            <input type="text" name="navn" id="inpNavn" class="inputfield" required>
         </div>
-
-        <p id="listeBesked" class="banner ok" role="status"></p>
-
-        <div class="tabel-wrapper">
-            <table>
-                <thead>
-                <tr>
-                    <th>Aktivitet</th>
-                    <th class="tal">Pris</th>
-                    <th class="tal">Alder</th>
-                    <th class="tal">Varighed</th>
-                    <th class="tal">Pladser</th>
-                    <th>Åbent</th>
-                    <th><span class="skjult">Handlinger</span></th>
-                </tr>
-                </thead>
-                <tbody id="aktivitetTabel"></tbody>
-            </table>
+        <div class="form-group">
+            <label for="inpBeskrivelse">Beskrivelse</label>
+            <textarea name="beskrivelse" id="inpBeskrivelse" class="inputfield" rows="2"></textarea>
         </div>
-        <p id="ingenAktiviteter" class="tom-tilstand" hidden>Der er ingen aktiviteter endnu. Tryk på “+ Ny aktivitet”.</p>
-    </section>
+        <div class="form-group">
+            <label for="inpPris">Pris (kr.)</label>
+            <input type="number" name="pris" id="inpPris" class="inputfield" min="0" required>
+        </div>
+        <div class="form-group">
+            <label for="inpAlder">Aldersgrænse</label>
+            <input type="number" name="aldersgrænse" id="inpAlder" class="inputfield" min="0" required>
+        </div>
+        <div class="form-group">
+            <label for="inpVarighed">Varighed (minutter)</label>
+            <input type="number" name="varighed" id="inpVarighed" class="inputfield" min="1" required>
+        </div>
+        <div class="form-group">
+            <label for="inpKapacitet">Kapacitet</label>
+            <input type="number" name="kapacitet" id="inpKapacitet" class="inputfield" min="1" required>
+        </div>
+        <div class="form-group">
+            <label for="inpAabner">Åbner</label>
+            <input type="time" name="aabner" id="inpAabner" class="inputfield" value="10:00" required>
+        </div>
+        <div class="form-group">
+            <label for="inpLukker">Lukker</label>
+            <input type="time" name="lukker" id="inpLukker" class="inputfield" value="18:00" required>
+        </div>
+        <button type="submit" id="pbGem">Opret</button>
+        <button type="button" id="pbAnnuller" class="btn2" hidden>Annuller</button>
+    </form>
+</div>
 
-    <section id="formSektion" class="kort" hidden>
-        <h2 id="formTitel">Ny aktivitet</h2>
-        <form id="aktivitetForm">
-            <fieldset>
-                <legend>Beskrivelse</legend>
-                <div class="felter">
-                    <label class="hel-bredde">Navn
-                        <input id="navn" required>
-                    </label>
-                    <label class="hel-bredde">Beskrivelse
-                        <textarea id="beskrivelse" rows="2"></textarea>
-                    </label>
-                    <label>Pris pr. person (kr.)
-                        <input id="pris" type="number" min="0" required>
-                    </label>
-                    <label>Aldersgrænse (år)
-                        <input id="aldersgraense" type="number" min="0" required>
-                    </label>
-                </div>
-            </fieldset>
+<table id="tblAktiviteter">
+    <tr>
+        <th>Navn</th>
+        <th>Pris</th>
+        <th>Alder</th>
+        <th>Varighed</th>
+        <th>Kapacitet</th>
+        <th>Åbent</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+</table>
 
-            <fieldset>
-                <legend>Tider og pladser</legend>
-                <div class="felter">
-                    <label>Åbner
-                        <input id="aabner" type="time" value="10:00" required>
-                    </label>
-                    <label>Lukker
-                        <input id="lukker" type="time" value="18:00" required>
-                    </label>
-                    <label>Varighed (minutter)
-                        <input id="varighed" type="number" min="1" required>
-                        <span class="hjaelp">Bestemmer også starttiderne: fx 30 min giver 10:00, 10:30, 11:00 …</span>
-                    </label>
-                    <label>Pladser pr. omgang
-                        <input id="kapacitet" type="number" min="1" required>
-                    </label>
-                </div>
-            </fieldset>
+<div id="divUdstyr" class="form-container" hidden>
+    <h2 id="txtUdstyrTitel">Udstyr</h2>
+    <p id="txtUdstyrBekraeftelse" class="bekraeftelse" hidden></p>
+    <table id="tblUdstyr">
+        <tr>
+            <th>Udstyr</th>
+            <th>Antal pr. person</th>
+            <th></th>
+        </tr>
+    </table>
 
-            <p id="fejlbesked" class="banner fejl" role="alert"></p>
+    <h3>Tilføj udstyr</h3>
+    <form id="formUdstyr">
+        <div class="form-group">
+            <label for="inpUdstyrNavn">Navn</label>
+            <input type="text" name="navn" id="inpUdstyrNavn" class="inputfield" placeholder="fx Hjelm" required>
+        </div>
+        <div class="form-group">
+            <label for="inpUdstyrAntal">Antal pr. person</label>
+            <input type="number" name="antalPrPerson" id="inpUdstyrAntal" class="inputfield" min="1" value="1" required>
+        </div>
+        <button type="submit">Tilføj</button>
+        <button type="button" id="pbLukUdstyr" class="btn2">Luk</button>
+    </form>
+</div>
 
-            <div class="knap-raekke">
-                <button type="submit" id="gemKnap">Opret aktivitet</button>
-                <button type="button" id="annullerKnap" class="sekundaer">Annuller</button>
-            </div>
-        </form>
-    </section>
-</main>
-
-<script src="config.js"></script>
-<script src="activities.js"></script>
+<script type="module" src="js/admin-aktiviteter.js"></script>
 </body>
 </html>

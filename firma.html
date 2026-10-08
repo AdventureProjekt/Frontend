@@ -2,100 +2,74 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Firmaarrangement – Adventure</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Firmaarrangement</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="topbar">
-    <div class="topbar-indhold">
-        <a href="index.html" class="logo">Adventure</a>
-        <nav aria-label="Hovedmenu">
-            <a href="aktiviteter.html">Aktiviteter</a>
-            <a href="booking.html">Book</a>
-            <a href="firma.html" aria-current="page">Firma</a>
-            <a href="manager-bookinger.html">Manager</a>
-            <a href="medarbejder.html">Medarbejder</a>
-            <a href="admin-aktiviteter.html">Ejer</a>
-        </nav>
-    </div>
-</header>
-<div id="serverFejl" class="banner fejl" role="alert" hidden></div>
+<nav>
+    <a href="index.html">Forside</a>
+    <a href="aktiviteter.html">Aktiviteter</a>
+    <a href="booking.html">Book</a>
+    <a href="firma.html">Firma</a>
+</nav>
 
-<main>
-    <div class="sidehoved">
-        <h1>Firmaarrangement</h1>
-        <p class="undertekst">Fortæl os, hvad I ønsker. Vi sammensætter et program og vender tilbage med tidspunkter.</p>
-    </div>
+<h1>Firmaarrangement</h1>
+<p class="center">Send os en forespørgsel, så vender vi tilbage med tidspunkter.</p>
 
-    <form id="forespoergselForm">
-        <fieldset>
-            <legend><span class="trin-nr">1</span>Om jeres firma</legend>
-            <div class="felter">
-                <label>Firmanavn
-                    <input id="firmanavn" autocomplete="organization" required>
-                </label>
-                <label>Kontaktperson
-                    <input id="kontaktperson" autocomplete="name" required>
-                </label>
-                <label>E-mail
-                    <input id="mail" type="email" autocomplete="email" required>
-                </label>
-                <label>Telefonnummer
-                    <input id="tlfnr" type="tel" autocomplete="tel" required>
-                </label>
-            </div>
-        </fieldset>
+<div id="divKvittering" class="kvittering" hidden>
+    <div id="kvitteringIndhold"></div>
+    <p>Vi vender tilbage med tidspunkter. Gem jeres forespørgselsnummer, så I kan følge status herunder.</p>
+    <button id="pbNyForespoergsel">Send en ny forespørgsel</button>
+</div>
 
-        <fieldset>
-            <legend><span class="trin-nr">2</span>Arrangementet</legend>
-            <div class="felter">
-                <label>Ønsket dato
-                    <input id="dato" type="date" required>
-                </label>
-                <label>Antal deltagere
-                    <input id="antalDeltagere" type="number" min="1" required>
-                </label>
-                <div class="hel-bredde">
-                    <p style="margin: 0 0 6px; font-weight: 600">Ønskede aktiviteter <span class="hjaelp">(vælg mindst én)</span></p>
-                    <div id="aktivitetValg" class="valg-liste"></div>
-                </div>
-                <label class="hel-bredde">Besked <span class="hjaelp">(valgfri – fx ønsker til tidspunkter eller forplejning)</span>
-                    <textarea id="beskedTekst" rows="3"></textarea>
-                </label>
-            </div>
-        </fieldset>
-
-        <p id="besked" class="banner fejl" role="alert"></p>
-
-        <div class="knap-raekke">
-            <button type="submit" id="sendKnap">Send forespørgsel</button>
+<div class="form-container" id="divForm">
+    <form id="formFirma">
+        <div class="form-group">
+            <label for="inpFirmanavn">Firmanavn</label>
+            <input type="text" name="firmanavn" id="inpFirmanavn" class="inputfield" required>
         </div>
+        <div class="form-group">
+            <label for="inpKontaktperson">Kontaktperson</label>
+            <input type="text" name="kontaktperson" id="inpKontaktperson" class="inputfield" required>
+        </div>
+        <div class="form-group">
+            <label for="inpMail">E-mail</label>
+            <input type="email" name="mail" id="inpMail" class="inputfield" required>
+        </div>
+        <div class="form-group">
+            <label for="inpTlfnr">Telefonnummer</label>
+            <input type="text" name="tlfnr" id="inpTlfnr" class="inputfield" required>
+        </div>
+        <div class="form-group">
+            <label for="inpDato">Ønsket dato</label>
+            <input type="date" name="dato" id="inpDato" class="inputfield" required>
+        </div>
+        <div class="form-group">
+            <label for="inpAntal">Antal deltagere</label>
+            <input type="number" name="antalDeltagere" id="inpAntal" class="inputfield" min="1" required>
+        </div>
+        <div class="form-group">
+            <label>Aktiviteter</label>
+            <div id="divAktiviteter"></div>
+        </div>
+        <div class="form-group">
+            <label for="inpBesked">Besked (valgfri)</label>
+            <textarea name="besked" id="inpBesked" class="inputfield" rows="3"></textarea>
+        </div>
+        <button type="submit">Send forespørgsel</button>
     </form>
+</div>
 
-    <section id="kvittering" class="kort kvittering" hidden>
-        <div class="flueben" aria-hidden="true">✓</div>
-        <h2>Tak – vi har modtaget jeres forespørgsel</h2>
-        <p class="undertekst">Gem jeres forespørgselsnummer. Med det kan I følge status herunder.</p>
-        <dl id="kvitteringDetaljer"></dl>
-        <div class="knap-raekke" style="justify-content: center">
-            <button type="button" id="nyForespoergselKnap" class="sekundaer">Send en ny forespørgsel</button>
-        </div>
-    </section>
+<h2>Se status på din forespørgsel</h2>
+<div class="form-container">
+    <div class="form-group">
+        <label for="inpForespoergselId">Forespørgselsnummer</label>
+        <input type="number" id="inpForespoergselId" class="inputfield">
+    </div>
+    <button id="pbVisStatus">Vis status</button>
+    <p id="txtStatus"></p>
+</div>
 
-    <section class="kort">
-        <h2>Følg status på en forespørgsel</h2>
-        <form id="statusForm" class="vaerktoejslinje" style="margin: 0">
-            <label>Forespørgselsnummer
-                <input id="statusId" type="number" min="1" required>
-            </label>
-            <button type="submit">Se status</button>
-        </form>
-        <div id="statusResultat" style="margin-top: 12px"></div>
-    </section>
-</main>
-
-<script src="config.js"></script>
-<script src="firma.js"></script>
+<script type="module" src="js/firma.js"></script>
 </body>
 </html>
