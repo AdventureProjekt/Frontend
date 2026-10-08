@@ -1,5 +1,5 @@
 // Fælles indstillinger og hjælpefunktioner, som alle sider bruger
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = "https://adventure-backend.graymeadow-560f0954.swedencentral.azurecontainerapps.io/api";
 
 const STATUS_TEKSTER = {
     AFVENTER: "Afventer",
