@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:8080/api/activities";
+javascript
+const API_URL = "https://adventure-backend.graymeadow-560f0954.swedencentral.azurecontainerapps.io/api/activities";
 
 const form = document.getElementById("aktivitetForm");
 const formTitel = document.getElementById("formTitel");
@@ -15,6 +16,7 @@ async function hentAktiviteter() {
     const aktiviteter = await response.json();
 
     tabel.innerHTML = "";
+
     for (const aktivitet of aktiviteter) {
         tabel.appendChild(lavRaekke(aktivitet));
     }
@@ -72,6 +74,7 @@ async function gemAktivitet(event) {
 
     let url = API_URL;
     let method = "POST";
+
     if (redigererId !== null) {
         url = API_URL + "/" + redigererId;
         method = "PUT";
@@ -79,12 +82,15 @@ async function gemAktivitet(event) {
 
     const response = await fetch(url, {
         method: method,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify(aktivitet)
     });
 
     if (!response.ok) {
-        fejlbesked.textContent = await response.text() || "Noget gik galt";
+        fejlbesked.textContent =
+            await response.text() || "Noget gik galt";
         return;
     }
 
@@ -122,10 +128,14 @@ async function sletAktivitet(id) {
         return;
     }
 
-    const response = await fetch(API_URL + "/" + id, { method: "DELETE" });
+    const response = await fetch(API_URL + "/" + id, {
+        method: "DELETE"
+    });
+
     if (!response.ok) {
         alert("Aktiviteten kunne ikke slettes");
     }
+
     hentAktiviteter();
 }
 
